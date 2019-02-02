@@ -1,0 +1,268 @@
+/* Macro for declaring aligned variables */
+#cmakedefine ALIGN_VARIABLE
+
+/* Enable dimensions with > 2^31 elements (NOT IMPLEMENTED) */
+#cmakedefine FULLY64BIT
+
+/* define if bool is a built-in type */
+#cmakedefine HAVE_BOOL
+
+/* define if the Boost library is available */
+#cmakedefine HAVE_BOOST
+
+/* Define to 1 if you have the <boost/mpi.hpp> header file. */
+#cmakedefine01 HAVE_BOOST_MPI_HPP
+
+/* define if the Boost::Serialization library is available */
+#cmakedefine HAVE_BOOST_SERIALIZATION
+
+/* define if the compiler has <climits> header */
+#cmakedefine HAVE_CLIMITS 
+
+/* define if the compiler has complex<T> */
+#cmakedefine HAVE_COMPLEX
+
+/* define if the compiler has standard complex<T> functions */
+#cmakedefine HAVE_COMPLEX_FCNS
+
+/* define if the compiler has complex math functions */
+#cmakedefine HAVE_COMPLEX_MATH1
+
+/* define if the compiler has more complex math functions */
+#cmakedefine HAVE_COMPLEX_MATH2
+
+/* define if complex math functions are in namespace std */
+#cmakedefine HAVE_COMPLEX_MATH_IN_NAMESPACE_STD
+
+/* define if the compiler supports const_cast<> */
+#cmakedefine HAVE_CONST_CAST
+
+/* Define to 1 if you have the <cstring> header file. */
+#cmakedefine01 HAVE_CSTRING 
+
+/* define if the compiler supports default template parameters */
+#cmakedefine HAVE_DEFAULT_TEMPLATE_PARAMETERS
+
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#cmakedefine01 HAVE_DLFCN_H 
+
+/* define if the compiler supports dynamic_cast<> */
+#cmakedefine HAVE_DYNAMIC_CAST
+
+/* define if the compiler handle computations inside an enum */
+#cmakedefine HAVE_ENUM_COMPUTATIONS
+
+/* define if the compiler handles (int) casts in enum computations */
+#cmakedefine HAVE_ENUM_COMPUTATIONS_WITH_CAST
+
+/* define if the compiler supports exceptions */
+#cmakedefine HAVE_EXCEPTIONS
+
+/* define if the compiler supports the explicit keyword */
+#cmakedefine HAVE_EXPLICIT
+
+/* define if the compiler supports explicit template function qualification */
+#cmakedefine HAVE_EXPLICIT_TEMPLATE_FUNCTION_QUALIFICATION
+
+/* define if the compiler recognizes the full specialization syntax */
+#cmakedefine HAVE_FULL_SPECIALIZATION_SYNTAX
+
+/* define if the compiler supports function templates with non-type parameters
+   */
+#cmakedefine HAVE_FUNCTION_NONTYPE_PARAMETERS
+
+/* define if the compiler supports IEEE math library */
+#cmakedefine HAVE_IEEE_MATH
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#cmakedefine01 HAVE_INTTYPES_H 
+
+/* Define to 1 if you have the `m' library (-lm). */
+#cmakedefine01 HAVE_LIBM
+
+/* Define to 1 if you have the `papi' library (-lpapi). */
+#cmakedefine01 HAVE_LIBPAPI
+
+/* define if the compiler supports member constants */
+#cmakedefine HAVE_MEMBER_CONSTANTS
+
+/* define if the compiler supports member templates */
+#cmakedefine HAVE_MEMBER_TEMPLATES
+
+/* define if the compiler supports member templates outside the class
+   declaration */
+#cmakedefine HAVE_MEMBER_TEMPLATES_OUTSIDE_CLASS
+
+/* Define to 1 if you have the <memory.h> header file. */
+#cmakedefine01 HAVE_MEMORY_H 
+
+/* define if the compiler supports the mutable keyword */
+#cmakedefine HAVE_MUTABLE
+
+/* define if the compiler implements namespaces */
+#cmakedefine HAVE_NAMESPACES
+
+/* define if the compiler supports the Numerical C Extensions Group restrict
+   keyword */
+#cmakedefine HAVE_NCEG_RESTRICT
+
+/* define if the compiler supports the __restrict__ keyword */
+#cmakedefine HAVE_NCEG_RESTRICT_EGCS
+
+/* define if the compiler has numeric_limits<T> */
+#cmakedefine HAVE_NUMERIC_LIMITS
+
+/* define if the compiler accepts the old for scoping rules */
+#cmakedefine HAVE_OLD_FOR_SCOPING
+
+/* define if the compiler supports partial ordering */
+#cmakedefine HAVE_PARTIAL_ORDERING
+
+/* define if the compiler supports partial specialization */
+#cmakedefine HAVE_PARTIAL_SPECIALIZATION
+
+/* define if the compiler supports reinterpret_cast<> */
+#cmakedefine HAVE_REINTERPRET_CAST
+
+/* define if the compiler supports Run-Time Type Identification */
+#cmakedefine HAVE_RTTI
+
+/* define if the compiler has getrusage() function */
+#cmakedefine HAVE_RUSAGE
+
+/* define if the compiler supports static_cast<> */
+#cmakedefine HAVE_STATIC_CAST
+
+/* define if the compiler supports ISO C++ standard library */
+#cmakedefine HAVE_STD
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#cmakedefine01 HAVE_STDINT_H 
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#cmakedefine01 HAVE_STDLIB_H 
+
+/* define if the compiler supports Standard Template Library */
+#cmakedefine HAVE_STL
+
+/* Define to 1 if you have the <strings.h> header file. */
+#cmakedefine01 HAVE_STRINGS_H 
+
+/* Define to 1 if you have the <string.h> header file. */
+#cmakedefine01 HAVE_STRING_H
+
+/* define if the compiler supports System V math library */
+#cmakedefine HAVE_SYSTEM_V_MATH
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#cmakedefine01 HAVE_SYS_STAT_H 
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#cmakedefine01 HAVE_SYS_TYPES_H 
+
+/* Define to 1 if you have the <tbb/atomic.h> header file. */
+#cmakedefine01 HAVE_TBB_ATOMIC_H 
+
+/* define if the compiler supports basic templates */
+#cmakedefine HAVE_TEMPLATES
+
+/* define if the compiler supports templates as template arguments */
+#cmakedefine HAVE_TEMPLATES_AS_TEMPLATE_ARGUMENTS
+
+/* define if the compiler supports use of the template keyword as a qualifier
+   */
+#cmakedefine HAVE_TEMPLATE_KEYWORD_QUALIFIER
+
+/* define if the compiler supports template-qualified base class specifiers */
+#cmakedefine HAVE_TEMPLATE_QUALIFIED_BASE_CLASS
+
+/* define if the compiler supports template-qualified return types */
+#cmakedefine HAVE_TEMPLATE_QUALIFIED_RETURN_TYPE
+
+/* define if the compiler supports function matching with argument types which
+   are template scope-qualified */
+#cmakedefine HAVE_TEMPLATE_SCOPED_ARGUMENT_MATCHING
+
+/* define if the compiler recognizes typename */
+#cmakedefine HAVE_TYPENAME
+
+/* define if the compiler supports the vector type promotion mechanism */
+#cmakedefine HAVE_TYPE_PROMOTION
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#cmakedefine01 HAVE_UNISTD_H 
+
+/* define if the compiler supports numeric traits promotions */
+#cmakedefine HAVE_USE_NUMTRAIT
+
+/* define if the compiler has valarray<T> */
+#cmakedefine HAVE_VALARRAY
+
+/* define if the compiler has isnan function in namespace std */
+#cmakedefine ISNAN_IN_NAMESPACE_STD
+
+/* Define to the sub-directory where libtool stores uninstalled libraries. */
+#cmakedefine LT_OBJDIR
+
+/* define if the compiler has C math abs(integer types) in namespace std */
+#cmakedefine MATH_ABSINT_IN_NAMESPACE_STD
+
+/* define if the compiler has C math functions in namespace std */
+#cmakedefine MATH_FN_IN_NAMESPACE_STD
+
+/* Name of package */
+#cmakedefine PACKAGE "@PACKAGE@"
+
+/* Define to the address where bug reports for this package should be sent. */
+#cmakedefine PACKAGE_BUGREPORT "@PACKAGE_BUGREPORT@"
+
+/* Define to the full name of this package. */
+#cmakedefine PACKAGE_NAME "@PACKAGE_NAME@"
+
+/* Define to the full name and version of this package. */
+#cmakedefine PACKAGE_STRING "@PACKAGE_STRING@"
+
+/* Define to the one symbol short name of this package. */
+#cmakedefine PACKAGE_TARNAME "@PACKAGE_TARNAME@"
+
+/* Define to the home page for this package. */
+#cmakedefine PACKAGE_URL @PACKAGE_URL@
+
+/* Define to the version of this package. */
+#cmakedefine PACKAGE_VERSION "@PACKAGE_VERSION@"
+
+/* Pad array lengths to SIMD width. */
+#cmakedefine PAD_ARRAYS
+
+/* Set SIMD instruction width in bytes */
+#cmakedefine SIMD_WIDTH
+
+/* Define to 1 if you have the ANSI C header files. */
+#cmakedefine STDC_HEADERS
+
+/* Enable Blitz thread-safety features */
+#cmakedefine THREADSAFE
+
+/* Use TBB atomic types */
+#cmakedefine THREADSAFE_USE_TBB
+
+/* Specifies whether compiler alignment pragmas should be used */
+#cmakedefine USE_ALIGNMENT_PRAGMAS
+
+/* Version number of package */
+#cmakedefine VERSION "@VERSION@"
+
+/* CXX */
+#cmakedefine _compiler_name "@_compiler_name@"
+
+/* CXXFLAGS */
+#cmakedefine _compiler_options "@_compiler_options@"
+
+/* date */
+#cmakedefine _config_date "@_config_date@"
+
+/* uname -a */
+#cmakedefine _os_name "@_os_name@"
+
+/* target */
+#cmakedefine _platform "@_platform@"
