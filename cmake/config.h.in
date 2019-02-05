@@ -1,5 +1,5 @@
 /* Macro for declaring aligned variables */
-#cmakedefine ALIGN_VARIABLE
+#cmakedefine ALIGN_VARIABLE@ALIGN_VARIABLE@
 
 /* Enable dimensions with > 2^31 elements (NOT IMPLEMENTED) */
 #cmakedefine FULLY64BIT
@@ -11,7 +11,7 @@
 #cmakedefine HAVE_BOOST
 
 /* Define to 1 if you have the <boost/mpi.hpp> header file. */
-#cmakedefine01 HAVE_BOOST_MPI_HPP
+#cmakedefine HAVE_BOOST_MPI_HPP @HAVE_BOOST_MPI_HPP@
 
 /* define if the Boost::Serialization library is available */
 #cmakedefine HAVE_BOOST_SERIALIZATION
@@ -38,13 +38,13 @@
 #cmakedefine HAVE_CONST_CAST
 
 /* Define to 1 if you have the <cstring> header file. */
-#cmakedefine01 HAVE_CSTRING 
+#cmakedefine HAVE_CSTRING @HAVE_CSTRING@
 
 /* define if the compiler supports default template parameters */
 #cmakedefine HAVE_DEFAULT_TEMPLATE_PARAMETERS
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
-#cmakedefine01 HAVE_DLFCN_H 
+#cmakedefine HAVE_DLFCN_H @HAVE_DLFCN_H@
 
 /* define if the compiler supports dynamic_cast<> */
 #cmakedefine HAVE_DYNAMIC_CAST
@@ -75,13 +75,13 @@
 #cmakedefine HAVE_IEEE_MATH
 
 /* Define to 1 if you have the <inttypes.h> header file. */
-#cmakedefine01 HAVE_INTTYPES_H 
+#cmakedefine HAVE_INTTYPES_H @HAVE_INTTYPES_H@
 
 /* Define to 1 if you have the `m' library (-lm). */
-#cmakedefine01 HAVE_LIBM
+#cmakedefine HAVE_LIBM @HAVE_LIBM@
 
 /* Define to 1 if you have the `papi' library (-lpapi). */
-#cmakedefine01 HAVE_LIBPAPI
+#cmakedefine HAVE_LIBPAPI @HAVE_LIBPAPI@
 
 /* define if the compiler supports member constants */
 #cmakedefine HAVE_MEMBER_CONSTANTS
@@ -94,7 +94,7 @@
 #cmakedefine HAVE_MEMBER_TEMPLATES_OUTSIDE_CLASS
 
 /* Define to 1 if you have the <memory.h> header file. */
-#cmakedefine01 HAVE_MEMORY_H 
+#cmakedefine HAVE_MEMORY_H @HAVE_MEMORY_H@
 
 /* define if the compiler supports the mutable keyword */
 #cmakedefine HAVE_MUTABLE
@@ -137,31 +137,31 @@
 #cmakedefine HAVE_STD
 
 /* Define to 1 if you have the <stdint.h> header file. */
-#cmakedefine01 HAVE_STDINT_H 
+#cmakedefine HAVE_STDINT_H @HAVE_STDINT_H@
 
 /* Define to 1 if you have the <stdlib.h> header file. */
-#cmakedefine01 HAVE_STDLIB_H 
+#cmakedefine HAVE_STDLIB_H @HAVE_STDLIB_H@
 
 /* define if the compiler supports Standard Template Library */
 #cmakedefine HAVE_STL
 
 /* Define to 1 if you have the <strings.h> header file. */
-#cmakedefine01 HAVE_STRINGS_H 
+#cmakedefine HAVE_STRINGS_H @HAVE_STRINGS_H@
 
 /* Define to 1 if you have the <string.h> header file. */
-#cmakedefine01 HAVE_STRING_H
+#cmakedefine HAVE_STRING_H @HAVE_STRING_H@
 
 /* define if the compiler supports System V math library */
 #cmakedefine HAVE_SYSTEM_V_MATH
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
-#cmakedefine01 HAVE_SYS_STAT_H 
+#cmakedefine HAVE_SYS_STAT_H @HAVE_SYS_STAT_H@
 
 /* Define to 1 if you have the <sys/types.h> header file. */
-#cmakedefine01 HAVE_SYS_TYPES_H 
+#cmakedefine HAVE_SYS_TYPES_H @HAVE_SYS_TYPES_H@
 
 /* Define to 1 if you have the <tbb/atomic.h> header file. */
-#cmakedefine01 HAVE_TBB_ATOMIC_H 
+#cmakedefine HAVE_TBB_ATOMIC_H @HAVE_TBB_ATOMIC_H@
 
 /* define if the compiler supports basic templates */
 #cmakedefine HAVE_TEMPLATES
@@ -190,7 +190,7 @@
 #cmakedefine HAVE_TYPE_PROMOTION
 
 /* Define to 1 if you have the <unistd.h> header file. */
-#cmakedefine01 HAVE_UNISTD_H 
+#cmakedefine HAVE_UNISTD_H @HAVE_UNISTD_H@
 
 /* define if the compiler supports numeric traits promotions */
 #cmakedefine HAVE_USE_NUMTRAIT
@@ -235,10 +235,10 @@
 #cmakedefine PAD_ARRAYS
 
 /* Set SIMD instruction width in bytes */
-#cmakedefine SIMD_WIDTH
+#cmakedefine SIMD_WIDTH @SIMD_WIDTH@
 
 /* Define to 1 if you have the ANSI C header files. */
-#cmakedefine STDC_HEADERS
+#cmakedefine STDC_HEADERS @STDC_HEADERS@
 
 /* Enable Blitz thread-safety features */
 #cmakedefine THREADSAFE
