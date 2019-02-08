@@ -29,6 +29,8 @@ foreach (test_name IN LISTS TESTS)
    else ()
       add_executable(${exe_name} ${test_name}.cpp)
    endif ()
+   # Tests always need -DBZ_DEBUG
+   target_compile_definitions(${exe_name} PUBLIC BZ_DEBUG)
    target_include_directories(${exe_name} PRIVATE ${CMAKE_CURRENT_LIST_DIR}) 
    target_link_libraries(${exe_name} PRIVATE blitz)
 

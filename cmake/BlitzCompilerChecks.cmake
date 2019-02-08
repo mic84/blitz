@@ -1,5 +1,28 @@
 include(CheckCXXSourceCompiles)
 
+
+macro (cxx_align_directive)
+   message(STATUS "Checking whether the compiler supports structure alignment hints" )
+   check_cxx_source_compiles(
+      "int main(){__declspec(align(16))
+                  int var; var=0; return 0;}"
+      ALIGN_INTEL_TEST
+      )
+
+   if (ALIGN_INTEL_TEST)
+      set(ALIGN_VARIABLE "(vartype,varname,alignment) __declspec(align(alignment)) vartype varname")
+   else ()
+      check_cxx_source_compiles(
+         "int main(){int __attribute__ ((aligned (16))) var; var=0;return 0;}"
+         ALIGN_GNU_TEST
+         )
+      if (ALIGN_GNU_TEST)
+         set(ALIGN_VARIABLE "(vartype,varname,alignment) vartype __attribute__ ((aligned (alignment))) varname")
+      endif ()
+   endif ()
+endmacro ()
+
+
 macro (cxx_namespaces)
    message(STATUS "Checking whether the compiler implements namespaces" )
    check_cxx_source_compiles(

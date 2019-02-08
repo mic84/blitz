@@ -29,7 +29,7 @@ project(blitz VERSION ${VERSION} LANGUAGES CXX)
 
 #
 # Optional features
-# 
+#
 option(ENABLE_FORTRAN "Enable Fortran compilation" OFF )
 if (ENABLE_FORTRAN)
    enable_language(Fortran)
@@ -37,17 +37,26 @@ endif ()
 
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
-option(ENABLE_THREADSAFE OFF)
+option(ENABLE_THREADSAFE "Enable thread-safety features" OFF)
+if (ENABLE_THREADSAFE)
+   option(THREADSAFE_USE_TBB "Use Intel Threading Building Blocks atomic types" OFF)
+   if (THREADSAFE_USE_TBB)
+      message(FATAL_ERROR "Building Intel Threading Building Blocks is not yet supported in CMake builds")
+   endif ()
+endif ()
 
-set(ENABLE_SIMD_WIDTH "1" CACHE STRING
-   "ENABLE_SIMD_WIDTH=N Facilitate compiler vectorization optimizations 
-   for SIMD instruction width of N bytes. " )
+set(ENABLE_SIMD_WIDTH "0" CACHE STRING
+   "SIMD_WIDTH=N facilitate compiler vectorization optimizations 
+   for SIMD instruction width of N bytes." )
 
 option(ENABLE_ARRAY_LENGHT_PADDING
    "Sets the default array padding policy to pad all 
    lowest-rank lengths to nearest larger SIMD width.
    Caution: This means that arrays will in general be non-contiguous."
    OFF)
+if (ENABLE_ARRAY_LENGHT_PADDING AND (${ENABLE_SIMD_WIDTH} LESS_EQUAL 1))
+   message(WARNING "ENABLE_ARRAY_LENGHT_PADDING option is useless without ENABLE_SIMD_WIDTH > 1")
+endif ()
 
 option(ENABLE_SERIALIZATION
    "Enable serialization support using Boost::Serialization"
@@ -62,6 +71,35 @@ target_include_directories(blitz PUBLIC
    )
 
 #
+# Look for external libraries we may need
+# Autotool serach for PAPI. At the moment we do not
+#
+if (ENABLE_THREADSAFE AND NOT THREADSAFE_USE_TBB )
+   # Look first for P-threads and, if not found,
+   # look for OpenMP
+   set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+   find_package(Threads)
+   if (Threads_FOUND)
+      target_link_libraries(blitz PUBLIC Threads::Threads)
+   else ()
+      find_package(OpenMP REQUIRED)
+      target_link_libraries(blitz PUBLIC OpenMP::OpenMP_CXX)
+   endif ()
+endif ()
+
+if (ENABLE_SERIALIZATION)
+   find_package(Boost 1.40 REQUIRED COMPONENTS serialization)
+   if ( NOT TARGET Boost::serialization)
+      add_library(Boost::serialization IMPORTED INTERFACE)
+      set_property(TARGET Boost::serialization PROPERTY
+         INTERFACE_INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR})
+      set_property(TARGET Boost::serialization PROPERTY
+         INTERFACE_LINK_LIBRARIES ${Boost_LIBRARIES})
+   endif()
+   target_link_libraries(blitz PUBLIC Boost::serialization)
+endif ()
+
+#
 # Generate config files
 #
 include(BlitzConfigFile)
@@ -71,7 +109,6 @@ generate_blitz_config_file()
 # Load default compiler flags
 #
 include(BlitzCompilerFlags)
-
 
 #
 # Only source -- Requires only one include directory
@@ -96,6 +133,10 @@ function (install_public_headers)
    endforeach()
 endfunction ()
 
+
+#
+# Process subdirectories
+# 
 add_subdirectory(blitz)
 add_subdirectory(blitz/array)
 add_subdirectory(blitz/meta)

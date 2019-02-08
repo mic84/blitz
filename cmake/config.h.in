@@ -232,7 +232,7 @@
 #cmakedefine PACKAGE_VERSION "@PACKAGE_VERSION@"
 
 /* Pad array lengths to SIMD width. */
-#cmakedefine PAD_ARRAYS
+#cmakedefine PAD_ARRAYS @PAD_ARRAYS@
 
 /* Set SIMD instruction width in bytes */
 #cmakedefine SIMD_WIDTH @SIMD_WIDTH@
@@ -247,7 +247,7 @@
 #cmakedefine THREADSAFE_USE_TBB
 
 /* Specifies whether compiler alignment pragmas should be used */
-#cmakedefine USE_ALIGNMENT_PRAGMAS
+#cmakedefine USE_ALIGNMENT_PRAGMAS @USE_ALIGNMENT_PRAGMAS@
 
 /* Version number of package */
 #cmakedefine VERSION "@VERSION@"

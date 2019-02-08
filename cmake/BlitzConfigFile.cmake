@@ -1,18 +1,38 @@
 macro (generate_blitz_config_file)
 
+   set(SEMICOLUMN "-SC-") #This will indicate actual ";" and not item separator in lists
+
    # Modules we need
    include(CheckIncludeFileCXX)
    include(CheckIncludeFiles)
-   include(BlitzCompilerChecks)
-   
+   include(BlitzCompilerChecks)   
 
-   unset(HAVE_BOOST_MPI_HPP)
+   #
+   # Convert cmake options to config.h variables as needed
+   #
+   set(THREADSAFE ${ENABLE_THREADSAFE})
 
-
-   set(SEMICOLUMN "-SC-") #This will indicate actual ";" and not item separator in lists
-   if (${ENABLE_SIMD_WIDTH} EQUAL "1")
-      set(ALIGN_VARIABLE "(vartype,varname,alignment) vartype varname${SEMICOLUMN}")
+   set(ALIGN_VARIABLE "(vartype,varname,alignment) vartype varname") # Default
+   if ( ${ENABLE_SIMD_WIDTH} LESS_EQUAL 0 ) 
+      set(SIMD_WIDTH 1)
+   else ()
+      set(SIMD_WIDTH ${ENABLE_SIMD_WIDTH})
+      set(USE_ALIGNMENT_PRAGMAS 1)     
+      cxx_align_directive()
    endif ()
+   set(ALIGN_VARIABLE "${ALIGN_VARIABLE}${SEMICOLUMN}")
+
+   if ( (${ENABLE_SIMD_WIDTH} GREATER 1) AND ENABLE_ARRAY_LENGHT_PADDING)
+      set(PAD_ARRAYS 1)
+   endif ()
+
+   if (ENABLE_SERIALIZATION)
+      # We assume that search for Boost already happened before calling this macro
+      set(HAVE_BOOST  ${Boost_FOUND})
+      set(HAVE_BOOST_SERIALIZATION ${Boost_FOUND})
+      check_include_file_cxx("boost/mpi.hpp" HAVE_BOOST_MPI_HPP)
+   endif ()
+
    execute_process(COMMAND date OUTPUT_VARIABLE _config_date
       OUTPUT_STRIP_TRAILING_WHITESPACE)
    execute_process(COMMAND uname -a OUTPUT_VARIABLE _os_name
@@ -84,7 +104,7 @@ macro (generate_blitz_config_file)
    cxx_have_isnan_in_std()
    cxx_have_absint_in_std()
    cxx_have_math_fn_in_std()
-   set(SIMD_WIDTH ${ENABLE_SIMD_WIDTH})
+
 
    # Let's assume that the standard headers exists
    set(STDC_HEADERS 1)
