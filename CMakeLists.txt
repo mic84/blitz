@@ -1,11 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
-project(blitz CXX)
 
 #
 # Custom module path
 #
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/modules")
 
 #
 # Some variables 
@@ -19,6 +17,15 @@ set(PACKAGE_STRING "${PACKAGE} ${VERSION}")
 set(PACKAGE_TARNAME "blitz")
 set(PACKAGE_URL "\"\"")
 
+#
+# Python 2 is required to generate some files
+#
+find_package(Python2 COMPONENTS Interpreter) 
+
+#
+# Project starts here
+# 
+project(blitz VERSION ${VERSION} LANGUAGES CXX)
 
 #
 # Optional features
@@ -47,104 +54,89 @@ option(ENABLE_SERIALIZATION
    OFF )
 
 #
-# Optional packages
+# Setup library
 # 
-
-unset(HAVE_BOOST_MPI_HPP)
+add_library(blitz "") 
+target_include_directories(blitz PUBLIC
+   $<INSTALL_INTERFACE:include>
+   )
 
 #
 # Generate config files
 #
 include(BlitzConfigFile)
-# if (${ENABLE_SIMD_WIDTH} EQUAL "1")
-#  set(ALIGN_VARIABLE "(vartype,varname,alignment) vartype varname;")
-# endif ()
-# execute_process(COMMAND date OUTPUT_VARIABLE _config_date
-#    OUTPUT_STRIP_TRAILING_WHITESPACE)
-# execute_process(COMMAND uname -a OUTPUT_VARIABLE _os_name
-#    OUTPUT_STRIP_TRAILING_WHITESPACE)
-# set(_platform ${CMAKE_HOST_SYSTEM_PROCESSOR})
-# get_filename_component(_compiler_name "${CMAKE_CXX_COMPILER}" NAME)
-
-# include(CheckIncludeFileCXX)
-# include(CheckIncludeFiles)
-# include(Blitz_CompilerChecks)
-# cxx_namespaces()
-# cxx_have_bool()
-# check_include_file_cxx("climits" HAVE_CLIMITS)
-# cxx_have_complex()
-# cxx_have_complex_fcns()
-# cxx_have_complex_math1()
-# cxx_have_complex_math2()
-# cxx_have_complex_math_in_namespace_std()
-# cxx_have_const_cast()
-# cxx_have_default_template_params()
-# check_include_file_cxx("dlfcn.h"      HAVE_DLFCN_H)
-# cxx_have_dynamic_cast()
-# check_include_file_cxx("cstring"      HAVE_CSTRING)
-# cxx_have_enum_computations()
-# cxx_have_enum_comp_with_cast()
-# cxx_have_exceptions()
-# cxx_have_explicit()
-# cxx_have_explicit_template_func_qual()
-# cxx_have_full_specialization_syntax()
-# cxx_have_function_nontype_parameters()
-# cxx_have_ieee_math()
-# check_include_file_cxx("inttypes.h"   HAVE_INTTYPES_H)
-# cxx_have_member_constants()
-# cxx_have_member_templates()
-# cxx_have_member_templates_outside_class()
-# check_include_file_cxx("memory.h"     HAVE_MEMORY_H)
-# cxx_have_mutable()
-# cxx_have_nceg_restrict()
-# cxx_have_nceg_restrict_egcs()
-# cxx_have_numeric_limits()
-# cxx_have_old_for_scoping()
-# cxx_have_partial_ordering()
-# cxx_have_partial_ordering_specialization()
-# cxx_have_reinterpret_cast()
-# cxx_have_rtti()
-# cxx_have_rusage()
-# cxx_have_static_cast()
-# cxx_have_std()
-# check_include_file_cxx("stdint.h"     HAVE_STDINT_H)
-# check_include_file_cxx("stdlib.h"     HAVE_STDLIB_H)
-# cxx_have_stl()
-# check_include_file_cxx("string.h"     HAVE_STRING_H)
-# check_include_file_cxx("strings.h"    HAVE_STRINGS_H)
-# cxx_have_system_v_math()
-# check_include_file_cxx("sys/stat.h"   HAVE_SYS_STAT_H)
-# check_include_file_cxx("sys/types.h"  HAVE_SYS_TYPES_H)
-# check_include_file_cxx("tbb/atomic.h" HAVE_TBB_ATOMIC_H)
-# cxx_have_typename()
-# cxx_have_templates()
-# cxx_have_templates_as_templates_args()
-# cxx_have_template_keyword_qualifier()
-# cxx_have_template_qualified_base_class()
-# cxx_have_template_qualified_return_type()
-# cxx_have_template_scoped_arg_matching()
-# cxx_have_type_promotion()
-# check_include_file_cxx("unistd.h" HAVE_UNISTD_H)
-# cxx_have_numtrait()
-# cxx_have_valarray()
-# cxx_have_isnan_in_std()
-# cxx_have_absint_in_std()
-# cxx_have_math_fn_in_std()
-# set(SIMD_WIDTH ${ENABLE_SIMD_WIDTH})
-# # Let's assume that the standard headers exists
-# set(STDC_HEADERS 1)
-
-# configure_file(cmake/config.h.in config/config.h)
+generate_blitz_config_file()
 
 #
-# Setup library
-# 
-add_library(blitz "")
-# target_include_directories(blitz PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+# Load default compiler flags
+#
+include(BlitzCompilerFlags)
 
 
-# add_subdirectory(blitz/array)
+#
+# Only source -- Requires only one include directory
+#
+target_sources(blitz PRIVATE src/globals.cpp)
+target_include_directories(blitz PUBLIC
+   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+   )
 
+#
+# Add headers to library -- Files "*.cc" are headers only 
+#
+function (install_public_headers)
+   foreach ( file IN LISTS ARGN )
+      set(file_with_fullpath "${CMAKE_CURRENT_LIST_DIR}/${file}")
+      if (NOT EXISTS "${file_with_fullpath}")
+         message(FATAL_ERROR "install_public_headers(): file ${file_with_fullpath} cannot be found")
+      endif ()
+      file(RELATIVE_PATH relpath ${PROJECT_SOURCE_DIR} ${file_with_fullpath})
+      get_filename_component(dest ${relpath} DIRECTORY)
+      install(FILES "${file_with_fullpath}" DESTINATION "include/${dest}")
+   endforeach()
+endfunction ()
+
+add_subdirectory(blitz)
+add_subdirectory(blitz/array)
+add_subdirectory(blitz/meta)
+add_subdirectory(random)
+
+#
+# Test suite
+#
+enable_testing()
+add_subdirectory(testsuite EXCLUDE_FROM_ALL)
+
+#
+# Install
+#
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+   "${PROJECT_BINARY_DIR}/blitzConfigVersion.cmake"
+   VERSION ${VERSION}
+   COMPATIBILITY AnyNewerVersion
+   )
+
+install(TARGETS blitz
+   EXPORT blitzTargets
+   LIBRARY DESTINATION lib COMPONENT Runtime
+   ARCHIVE DESTINATION lib COMPONENT Development
+   RUNTIME DESTINATION bin COMPONENT Runtime
+   PUBLIC_HEADER DESTINATION include/blitz COMPONENT Development
+   BUNDLE DESTINATION bin COMPONENT Runtime
+   )
+
+include(CMakePackageConfigHelpers)
+configure_package_config_file(
+   "${PROJECT_SOURCE_DIR}/cmake/blitzConfig.cmake.in"
+   "${PROJECT_BINARY_DIR}/blitzConfig.cmake"
+   INSTALL_DESTINATION lib/cmake/blitz
+   )
+
+install(EXPORT blitzTargets DESTINATION lib/cmake/blitz)
+install(FILES "${PROJECT_BINARY_DIR}/blitzConfigVersion.cmake"
+   "${PROJECT_BINARY_DIR}/blitzConfig.cmake"
+   DESTINATION lib/cmake/blitz)
 
 
 
