@@ -62,6 +62,8 @@ option(ENABLE_SERIALIZATION
    "Enable serialization support using Boost::Serialization"
    OFF )
 
+option(ENABLE_TESTSUITE "Enable test suite" OFF)
+
 #
 # Setup library
 # 
@@ -145,8 +147,10 @@ add_subdirectory(random)
 #
 # Test suite
 #
-enable_testing()
-add_subdirectory(testsuite EXCLUDE_FROM_ALL)
+if (ENABLE_TESTSUITE)
+   enable_testing()
+   add_subdirectory(testsuite EXCLUDE_FROM_ALL)
+endif ()
 
 #
 # Install
