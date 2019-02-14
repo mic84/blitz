@@ -74,13 +74,13 @@
 /* Pathscale pathCC compiler */
 #include <blitz/pathscale/bzconfig.h>
 
-#elif defined(__GNUC__)
-/* GNU gcc compiler */
-#include <blitz/gnu/bzconfig.h>
-
 #elif defined(__PGI)
 /* PGI pgCC compiler */
 #include <blitz/pgi/bzconfig.h>
+
+#elif defined(__GNUC__)
+/* GNU gcc compiler */
+#include <blitz/gnu/bzconfig.h>
 
 #elif defined(__KCC)
 /* KAI KCC compiler */
