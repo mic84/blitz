@@ -23,7 +23,7 @@ set(cxx_cray_opt  "$<AND:${cxx_lang},${opt_build},${cray}>")
 # Set compiler flags if user did not define any
 #
 if (NOT CMAKE_CXX_FLAGS)
-   target_compile_options(blitz PUBLIC
+   target_compile_options(blitz PRIVATE
       $<BUILD_INTERFACE:
       $<${cxx_clang_dbg}:-ansi -O0>
       $<${cxx_clang_opt}:-ansi>
