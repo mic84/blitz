@@ -40,4 +40,4 @@ endif ()
 #
 # Compile definitions
 #
-target_compile_definitions(blitz PUBLIC HAVE_CONFIG_H $<${dbg_build}:BZ_DEBUG> )
+target_compile_definitions(blitz PUBLIC $<BUILD_INTERFACE:HAVE_CONFIG_H $<${dbg_build}:BZ_DEBUG>> )
