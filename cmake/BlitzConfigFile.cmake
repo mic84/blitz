@@ -5,7 +5,7 @@ macro (generate_blitz_config_file)
    # Modules we need
    include(CheckIncludeFileCXX)
    include(CheckIncludeFiles)
-   include(BlitzCompilerChecks)   
+   include(BlitzCompilerChecks)
 
    #
    # Convert cmake options to config.h variables as needed
@@ -13,11 +13,11 @@ macro (generate_blitz_config_file)
    set(THREADSAFE ${ENABLE_THREADSAFE})
 
    set(ALIGN_VARIABLE "(vartype,varname,alignment) vartype varname") # Default
-   if ( ${ENABLE_SIMD_WIDTH} LESS_EQUAL 0 ) 
+   if ( ${ENABLE_SIMD_WIDTH} LESS_EQUAL 0 )
       set(SIMD_WIDTH 1)
    else ()
       set(SIMD_WIDTH ${ENABLE_SIMD_WIDTH})
-      set(USE_ALIGNMENT_PRAGMAS 1)     
+      set(USE_ALIGNMENT_PRAGMAS 1)
       cxx_align_directive()
    endif ()
    set(ALIGN_VARIABLE "${ALIGN_VARIABLE}${SEMICOLUMN}")
@@ -37,6 +37,9 @@ macro (generate_blitz_config_file)
       OUTPUT_STRIP_TRAILING_WHITESPACE)
    execute_process(COMMAND uname -a OUTPUT_VARIABLE _os_name
       OUTPUT_STRIP_TRAILING_WHITESPACE)
+    string(REGEX REPLACE ";" " " _os_name "${_os_name}")
+    string(REGEX REPLACE "\n" " " _os_nameee "${_os_name}")
+
    set(_platform ${CMAKE_HOST_SYSTEM_PROCESSOR})
    get_filename_component(_compiler_name "${CMAKE_CXX_COMPILER}" NAME)
 
@@ -135,7 +138,7 @@ macro (generate_blitz_config_file)
          list(GET item_list 1 var_name)
          list(APPEND bzconfig_content "#ifndef ${var_name}")
          list(APPEND bzconfig_content "${item}")
-         list(APPEND bzconfig_content "#endif")      
+         list(APPEND bzconfig_content "#endif")
       else ()
          list(APPEND bzconfig_content "${item}")
       endif ()
