@@ -116,8 +116,8 @@ macro (generate_blitz_config_file)
    #
    # Generate compiler specific header (bzconfig.h)
    #
-   configure_file(cmake/config.h.in ${CMAKE_BINARY_DIR}/config.h)
-   file(STRINGS  "${CMAKE_BINARY_DIR}/config.h" config_h)
+   configure_file(cmake/config.h.in ${PROJECT_BINARY_DIR}/config.h)
+   file(STRINGS  "${PROJECT_BINARY_DIR}/config.h" config_h)
    # The following commented-out two lines could, in principle, replace the above two
    # lines and handle everything "internally" without creating a futher config.h file.
    # However using CONFIGURE feature of STRING makes every define True
@@ -146,11 +146,11 @@ macro (generate_blitz_config_file)
    list(APPEND bzconfig_content "#endif")
    string(REPLACE ";" "\n" bzconfig_content "${bzconfig_content}")
    string(REPLACE "${SEMICOLUMN}" ";" bzconfig_content "${bzconfig_content}")
-   file(WRITE "${CMAKE_BINARY_DIR}/blitz/${comp_lower}/bzconfig.h" "${bzconfig_content}")
+   file(WRITE "${PROJECT_BINARY_DIR}/blitz/${comp_lower}/bzconfig.h" "${bzconfig_content}")
 
-   target_include_directories(blitz PUBLIC $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>)
+   target_include_directories(blitz PUBLIC $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>)
 
-   install(FILES "${CMAKE_BINARY_DIR}/blitz/${comp_lower}/bzconfig.h"
+   install(FILES "${PROJECT_BINARY_DIR}/blitz/${comp_lower}/bzconfig.h"
       DESTINATION "include/blitz/${comp_lower}/")
 
 endmacro ()
